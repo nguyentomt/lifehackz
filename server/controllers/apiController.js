@@ -41,7 +41,6 @@ controller.getData = (req, res, next) => {
 
 controller.makeHack = (req, res, next) => {
   const { category, content, displayname } = req.body;
-  console.log('Category: ', category, ' Content: ', content, ' User: ', displayname)
 
   const postHack = 
     `INSERT INTO hacks (content, likes, dislikes, user_id, category_id) 
@@ -51,7 +50,7 @@ controller.makeHack = (req, res, next) => {
   db.query(postHack)
     .then(data => {
       const { rows } = data;
-      console.log('HACK From Database: ', rows);
+      // console.log('HACK From Database: ', rows);
       res.locals.data = rows;
       return next();
     })
