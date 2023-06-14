@@ -1,16 +1,14 @@
-import React from "react";
-// import { BrowserRouter as Router, Switch } from "react-router-dom";
+import React, { useEffect, useState } from "react";
 import LoginContainer from "./containers/LoginContainer";
 import HackCreator from "./components/HackCreator";
 import MainDisplay from "./components/MainDisplay";
-import { useEffect, useState } from "react";
 import jwtDecode from "jwt-decode";
 import { set } from "lodash";
-import { Routes, Route } from "react-router-dom";
-
+import { Routes, Route, useNavigate } from "react-router-dom";
 
 const App = () => {
   const [user, setUser] = useState({});
+  const navigate = useNavigate();
 
   // FOR GOOGLE OAUTH
   // async function handleCallbackResponse(response) {
@@ -77,7 +75,7 @@ const App = () => {
         console.log('App.jsx: makeUser: data from server: ', data);
         setUser(data[0]);
         console.log('Successful signup!');
-        console.log("App.jsx: makeUser: User from state: ", user);
+        navigate('/main');
         }
         // console.log("Successful signup!");
         // console.log("App.jsx: makeUser: Data from server", data);
@@ -110,6 +108,7 @@ const App = () => {
         console.log('App.jsx: loginUser: data from server: ', data);
         setUser(data[0]);
         console.log('Successful login!');
+        navigate('/main');
         }
       } else
         console.log('App.jsx: loginUser: Error occured while trying to log in.');
@@ -170,7 +169,7 @@ const App = () => {
   return (
     <Routes>
       <Route path='/' element={<LoginContainer makeUser={makeUser} loginUser={loginUser} />} />
-      {/* <Route path='/main' element={<MainContainer />} /> */}
+      <Route path='/main' element={<MainDisplay />} />
     </Routes>
   );
 };
