@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 
-const Hack = ({ hacks }) => {
+const Hack = ({ category, setCategory, hacks }) => {
 
-  const { content, displayname, likes, dislikes } = hacks
+  const { content, displayname, likes, dislikes } = hacks;
 
   // creates individual hack boxes
 

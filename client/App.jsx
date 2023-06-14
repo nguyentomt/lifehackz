@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import LoginContainer from "./containers/LoginContainer";
 import HackCreator from "./components/HackCreator";
-import MainDisplay from "./components/MainDisplay";
+import MainContainer from "./containers/MainContainer";
 import jwtDecode from "jwt-decode";
 import { set } from "lodash";
 import { Routes, Route, useNavigate } from "react-router-dom";
@@ -117,23 +117,23 @@ const App = () => {
     }
   }
 
-  async function changeDisplayName(e) {
-    console.log("clicked displayname");
-    e.preventDefault();
-    const input = document.getElementById("change-displayname");
-    // console.log(input.value);
-    const displayName = input.value;
-    const fetchProps = {
-      method: "PATCH",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ id: user.id, newDisplayName: displayName }),
-    };
-    const response = await fetch(`/api/user/`, fetchProps);
-    const data = await response.json();
-    console.log("Changed user: ", data[0]);
-    setUser(data[0]);
-    input.value = "";
-  }
+  // async function changeDisplayName(e) {
+  //   console.log("clicked displayname");
+  //   e.preventDefault();
+  //   const input = document.getElementById("change-displayname");
+  //   // console.log(input.value);
+  //   const displayName = input.value;
+  //   const fetchProps = {
+  //     method: "PATCH",
+  //     headers: { "Content-Type": "application/json" },
+  //     body: JSON.stringify({ id: user.id, newDisplayName: displayName }),
+  //   };
+  //   const response = await fetch(`/api/user/`, fetchProps);
+  //   const data = await response.json();
+  //   console.log("Changed user: ", data[0]);
+  //   setUser(data[0]);
+  //   input.value = "";
+  // }
 
   // return (
   //   <Router>
@@ -169,7 +169,7 @@ const App = () => {
   return (
     <Routes>
       <Route path='/' element={<LoginContainer makeUser={makeUser} loginUser={loginUser} />} />
-      <Route path='/main' element={<MainDisplay />} />
+      <Route path='/main' element={<MainContainer user={user} setUser={setUser} />} />
     </Routes>
   );
 };
