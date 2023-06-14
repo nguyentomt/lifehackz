@@ -4,33 +4,39 @@ import Hack from './Hack'
 
 const MainDisplay = () => {
   const [hacks, setHack] = useState([]);
-  const [value, setValue] = useState('');
+  const [value, setValue] = useState('codesmith');
 
   // Event handler for main category dropdown //
   const handleChange = (event) => {
-    console.log('category has been changed')
+    // console.log('category has been changed');
     event.preventDefault();
-
-    setValue(event.target.value); 
-    console.log(event.target.value);
+    
+    setValue(event.target.value);
   };
+
+  // after changing category, properly logs the value of the category
+  // useEffect(() => {
+  //   console.log('MainDisplay value from event target: ', value);
+  // }, [value]);
 
   // GET request to SQL for specific category hacks //
   async function getHacks() {
     try {
       const response = await fetch(`/api/${value}`);
+      console.log('This is our response before we log data: ', response)
       const data = await response.json();
-      console.log(data);
+      console.log('data from getHacks: ', data);
       setHack(data);
     } catch (err) {
-      console.log(err);
+      console.log('getHacks error! ', err);
     }
   }
 
   // Trigger for page rerender once Category change is detected. //
   useEffect(() => {
     getHacks();
-  }, [value])
+  }, [value]);
+
 
   
   const hackItems = [];

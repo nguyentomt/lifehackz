@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 
-const Hack = ({hacks}) => {
-  const { content, displayname, likes, dislikes } = hacks
+const Hack = ({ hacks }) => {
+
+  const { content, username, likes, dislikes } = hacks
 
   // creates individual hack boxes
 
@@ -14,7 +15,6 @@ const Hack = ({hacks}) => {
       </button>
       <span>{likes}</span>
       <button id="dislike" className="voteBtn">
-        
         Dislike
       </button>
       <span>{dislikes}</span>

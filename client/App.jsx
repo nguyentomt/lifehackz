@@ -8,50 +8,50 @@ import jwtDecode from 'jwt-decode';
 import { set } from 'lodash';
 
 const App = () => {
-  const [user, setUser] = useState({})
+  const [user, setUser] = useState({});
 
   // FOR GOOGLE OAUTH
-  async function handleCallbackResponse(response) {
-    const userObject = jwtDecode(response.credential);
-    const googlename = userObject.name;
-    let googleuser;
-    // Check if the user exisits in the users table, he they do, set them to the current user
-    googleuser = await fetch(`api/user/${googlename}`);
-    const checkIfUserExists = await googleuser.json();
-    if (checkIfUserExists.length > 0) {
-      document.getElementById('signInDiv').hidden = true;
-      setUser(checkIfUserExists[0]);
-    }
-    // Create a new user and set them to the current user
-    else {
-      const fetchProps = {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({name: googlename})
-      };
-      const responseFromCreatingUser = await fetch(`api/user/`, fetchProps);
-      googleuser = await responseFromCreatingUser.json();
-      document.getElementById('signInDiv').hidden = true;
-      setUser(googleuser[0]);
-    } 
-  }
-  function handleSignOut(event) {
-    setUser({});
-    document.getElementById("signInDiv").hidden = false;
-  }
-  useEffect(() => {
-    // These google objects came from a script tag which can be found in index.html
-    /* global google */
-    google.accounts.id.initialize({
-      client_id: '745677008135-28koou137ibajp5jnjalltuu1slpbsde.apps.googleusercontent.com',
-      callback: handleCallbackResponse
-    });
-    google.accounts.id.renderButton(
-      document.getElementById('signInDiv'),
-      {theme: 'outline', size: 'large'}
-    );
-    google.accounts.id.prompt();
-  }, []);
+  // async function handleCallbackResponse(response) {
+  //   const userObject = jwtDecode(response.credential);
+  //   const username = userObject.name;
+  //   let googleuser;
+  //   // Check if the user exists in the users table, he they do, set them to the current user
+  //   googleuser = await fetch(`api/user/${username}`);
+  //   const checkIfUserExists = await googleuser.json();
+  //   if (checkIfUserExists.length > 0) {
+  //     document.getElementById('signInDiv').hidden = true;
+  //     setUser(checkIfUserExists[0]);
+  //   }
+  //   // Create a new user and set them to the current user
+  //   else {
+  //     const fetchProps = {
+  //       method: 'POST',
+  //       headers: { 'Content-Type': 'application/json' },
+  //       body: JSON.stringify({name: username})
+  //     };
+  //     const responseFromCreatingUser = await fetch(`api/user/`, fetchProps);
+  //     googleuser = await responseFromCreatingUser.json();
+  //     document.getElementById('signInDiv').hidden = true;
+  //     setUser(googleuser[0]);
+  //   } 
+  // }
+  // function handleSignOut(event) {
+  //   setUser({});
+  //   document.getElementById("signInDiv").hidden = false;
+  // }
+  // useEffect(() => {
+  //   // These google objects came from a script tag which can be found in index.html
+  //   /* global google */
+  //   google.accounts.id.initialize({
+  //     client_id: '745677008135-28koou137ibajp5jnjalltuu1slpbsde.apps.googleusercontent.com',
+  //     callback: handleCallbackResponse
+  //   });
+  //   google.accounts.id.renderButton(
+  //     document.getElementById('signInDiv'),
+  //     {theme: 'outline', size: 'large'}
+  //   );
+  //   google.accounts.id.prompt();
+  // }, []);
   // END GOOGLE OAUTH
 
 
@@ -71,12 +71,16 @@ const App = () => {
   }
 
   async function loginUser(e) {
-    e.preventDefault();
-    const input = document.getElementById('login-account-input');
-    const response = await fetch(`/api/user/${input.value}`)
-    const user = await response.json();
-    setUser(user[0]);
-    input.value = '';
+    try {
+      e.preventDefault();
+      const input = document.getElementById('login-account-input');
+      const response = await fetch(`/api/user/${input.value}`);
+      const user = await response.json();
+      setUser(user[0]);
+      input.value = '';
+    } catch (error) {
+      console.log(`Failed to log in: ${error}`);
+    }
   }
   
   async function changeDisplayName(e) {

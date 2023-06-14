@@ -4,16 +4,22 @@
   margin: 0;
 }
 
+
+
 body {
   background-color: pink;
   // border: 1px solid orange;
   margin: 1em;
 }
 
+////////////////////////
+// Not doing anything //
 h1 {
   text-align: center;
 }
 
+/////////////////////////////////
+// This does nothing currently //
 .gsignin {
   display: flex;
   align-items: center;
@@ -51,6 +57,10 @@ h1 {
   justify-content: center;
   margin: 2em auto;
   padding: 2em;
+  .voteBtn {
+    margin-top: .5rem;
+    width: 3.5rem;
+  }
 }
 
 .displayname-hack {
@@ -68,3 +78,4 @@ h1 {
   padding: 5px;
   margin: 5px;
 }
+

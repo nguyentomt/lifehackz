@@ -6,8 +6,9 @@
   "scripts": {
     "start": "node server/server.js",
     "build": "webpack",
-    "dev": "NODE_ENV=development nodemon server/server.js & NODE_ENV=development webpack serve --open",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "NODE_ENV=development nodemon server/server.js & NODE_ENV=development webpack serve --hot --open",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev2": "concurrently \"cross-env NODE_ENV=development webpack-dev-server --hot --progress --color\" \"nodemon ./server/server.js\""
   },
   "repository": {
     "type": "git",
@@ -26,6 +27,7 @@
     "express": "^4.12.3",
     "express-session": "^1.13.0",
     "jwt-decode": "^3.1.2",
+    "node": "^20.2.0",
     "pg": "^8.11.0",
     "prop-types": "^15.6.1",
     "react": "^18.2.0",
