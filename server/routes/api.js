@@ -1,11 +1,11 @@
-const express = require('express')
-const router = express.Router()
-const apiController = require('../controllers/apiController')
+const express = require('express');
+const router = express.Router();
+const apiController = require('../controllers/apiController');
 
 router.get('/:category',
   apiController.getData,
   (req, res, next) => {
-    res.status(200).json(res.locals.data)
+    res.status(200).json(res.locals.data);
   })
 
 router.post('/',
@@ -17,19 +17,19 @@ router.post('/',
   router.get('/user/:user',
   apiController.getUser,
   (req, res, next) => {
-    res.status(200).json(res.locals.data)
+    res.status(200).json(res.locals.data);
   })
 
   router.post('/user',
   apiController.makeUser,
   (req, res, next) => {
-    res.status(200).json(res.locals.data)
+    res.status(200).json(res.locals.data);
   })
 
   router.patch('/user',
-  apiController.changeUsername,
+  apiController.changeDisplayName,
   (req, res, next) => {
-    res.status(200).json(res.locals.data)
+    res.status(200).json(res.locals.data);
   })
 
 module.exports = router

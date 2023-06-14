@@ -9,7 +9,7 @@ const Hack = ({ hacks }) => {
   return (
     <div className="aHack">
       <h2><p>{content}</p></h2><br />
-      <p>Submitted by : <span className='username-hack'>{username}</span></p>
+      <p>Submitted by : <span className='displayname-hack'>{displayname}</span></p>
       <button id="like" className="voteBtn">
         Like
       </button>

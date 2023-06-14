@@ -90,7 +90,7 @@ const App = () => {
     const fetchProps = {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({id: user.id, newUsername: displayName})
+      body: JSON.stringify({id: user.id, newDisplayName: displayName})
     };
     const response = await fetch(`/api/user/`, fetchProps)
     const displayNameAfter = await response.json();
@@ -101,7 +101,7 @@ const App = () => {
 
   return (
     <Router>
-      <h3>{user.username}</h3>
+      <h3>{user.displayname}</h3>
       <div id="signInDiv"></div>
       { Object.keys(user).length != 0 &&
       <>
