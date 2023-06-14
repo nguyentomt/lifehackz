@@ -8,10 +8,12 @@ import jwtDecode from 'jwt-decode';
 import { set } from 'lodash';
 
 const App = () => {
+
   const [user, setUser] = useState({})
 
-  // FOR GOOGLE OAUTH
-  async function handleCallbackResponse(response) {
+  
+   // FOR GOOGLE OAUTH
+   async function handleCallbackResponse(response) {
     const userObject = jwtDecode(response.credential);
     const googlename = userObject.name;
     let googleuser;
