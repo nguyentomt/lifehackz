@@ -23,12 +23,12 @@ const MainDisplay = () => {
   async function getHacks() {
     try {
       const response = await fetch(`/api/${value}`);
-      console.log('This is our response before we log data: ', response)
+      // console.log('This is our response before we log data: ', response)
       const data = await response.json();
-      console.log('data from getHacks: ', data);
+      // console.log('data from getHacks: ', data);
       setHack(data);
     } catch (err) {
-      console.log('getHacks error! ', err);
+      // console.log('getHacks error! ', err);
     }
   }
 

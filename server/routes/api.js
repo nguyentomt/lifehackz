@@ -14,7 +14,7 @@ router.post('/',
     res.status(200).send([])
   })
 
-  router.get('/user/:user',
+  router.post('/user/:username',
   apiController.getUser,
   (req, res, next) => {
     res.status(200).json(res.locals.data);

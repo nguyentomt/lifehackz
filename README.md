@@ -41,9 +41,9 @@ CREATE TABLE categories (
 
 CREATE TABLE users (
         _id SERIAL PRIMARY KEY,
-        username varchar(30) NOT NULL UNIQUE,
-        password varchar(30) NOT NULL,
-        displayname varchar(20) UNIQUE
+        username varchar(50) NOT NULL UNIQUE,
+        password varchar(50) NOT NULL,
+        displayname varchar(50) UNIQUE
 );
 
 The tables use sequences to generate the next primary key.
