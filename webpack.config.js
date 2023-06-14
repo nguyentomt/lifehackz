@@ -41,13 +41,17 @@ module.exports = {
   },
   devServer: {
     static: {
-      directory: path.join(__dirname, 'build'),
+      directory: path.resolve(__dirname, 'build'),
       publicPath: '/'
     },
+    hot: true,
+    open: true,
     compress: true,
     port: 8080,
     proxy: {
-      '/': 'http://localhost:3000'
+      '/**': 'http://localhost:3000',
+      '/api/**': 'http://localhost:3000',
+      '/assets/**': 'http://localhost:3000',
     }
   },
   resolve: {
