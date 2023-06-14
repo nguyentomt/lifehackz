@@ -8,7 +8,7 @@ const Login = ({ makeUser, loginUser }) => {
      <div className="logins">
         <div>
             <form method='POST' action='/login'>
-                <input id='login-account-input'className="username" name="username" type="text" placeholder="username"></input>
+                <input id='login-account-input'className="username" name="username" type="text" placeholder="Username"></input>
                 <input name="password" type="password"></input>
                 <input className="button" type="submit" value="Log in" onClick={loginUser}></input>
             </form>
@@ -16,7 +16,7 @@ const Login = ({ makeUser, loginUser }) => {
 
         <div>
             <form method='POST' action='/signup'>
-                <input id='create-account-input' name="username" type="text" placeholder="username"></input>
+                <input id='create-account-input' name="username" type="text" placeholder="Username"></input>
                 <input name="password" type="password"></input>
                 <input className="button" type="submit" value="Create Account" onClick={makeUser}></input>
             </form>

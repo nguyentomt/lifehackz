@@ -8,11 +8,8 @@ const HackCreator = ({user}) => {
   // Event handler for add new hack form submission
   const handleFormSubmit = (event) => {
     event.preventDefault();
-    const u = user.displayname;
-    // console.log('content', content, 'category', category, 'user', u);
-    // console.log('this is user', user)
-    // console.log({ content, category, user });
-    const postData = { category, content, user: user.displayname};
+    const { displayname } = user;
+    const postData = { category, content, displayname };
     const addHack = {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
