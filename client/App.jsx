@@ -1,11 +1,13 @@
 import React from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import Login from "./components/Login";
+// import { BrowserRouter as Router, Switch } from "react-router-dom";
+import LoginContainer from "./containers/LoginContainer";
 import HackCreator from "./components/HackCreator";
 import MainDisplay from "./components/MainDisplay";
 import { useEffect, useState } from "react";
 import jwtDecode from "jwt-decode";
 import { set } from "lodash";
+import { Routes, Route } from "react-router-dom";
+
 
 const App = () => {
   const [user, setUser] = useState({});
@@ -134,36 +136,42 @@ const App = () => {
     input.value = "";
   }
 
-  return (
-    <Router>
-      <h3>{user.displayname}</h3>
-      <div id="signInDiv"></div>
-      {Object.keys(user).length != 0 && (
-        <>
-          <button id="signOutBttn" onClick={(e) => handleSignOut(e)}>
-            Sign Out
-          </button>
-          <input id="change-displayname" />
-          <button id="change-displayname-bttn" onClick={changeDisplayName}>
-            Change Display Name
-          </button>
-        </>
-      )}
+  // return (
+  //   <Router>
+  //     <h3>{user.displayname}</h3>
+  //     <div id="signInDiv"></div>
+  //     {Object.keys(user).length != 0 && (
+  //       <>
+  //         <button id="signOutBttn" onClick={(e) => handleSignOut(e)}>
+  //           Sign Out
+  //         </button>
+  //         <input id="change-displayname" />
+  //         <button id="change-displayname-bttn" onClick={changeDisplayName}>
+  //           Change Display Name
+  //         </button>
+  //       </>
+  //     )}
 
-      {user && (
-        <div>
-          <img src={user.picture} />
-          <h3>{user.name}</h3>
-        </div>
-      )}
-      <Switch>
-        <Route path="/">
-          <Login makeUser={makeUser} loginUser={loginUser} />
-        </Route>
-      </Switch>
-      <MainDisplay class="hack-items-container" />
-      <HackCreator user={user} />
-    </Router>
+  //     {user && (
+  //       <div>
+  //         <img src={user.picture} />
+  //         <h3>{user.name}</h3>
+  //       </div>
+  //     )}
+  //     <Switch>
+  //       <Route path="/">
+  //         <Login makeUser={makeUser} loginUser={loginUser} />
+  //       </Route>
+  //     </Switch>
+  //     <MainDisplay class="hack-items-container" />
+  //     <HackCreator user={user} />
+  //   </Router>
+  // );
+  return (
+    <Routes>
+      <Route path='/' element={<LoginContainer makeUser={makeUser} loginUser={loginUser} />} />
+      {/* <Route path='/main' element={<MainContainer />} /> */}
+    </Routes>
   );
 };
 

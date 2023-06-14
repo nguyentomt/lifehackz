@@ -24,4 +24,4 @@ const Login = ({ makeUser, loginUser }) => {
   )
 }
 
-export default Login
+export default Login;
