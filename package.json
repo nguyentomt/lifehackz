@@ -11,14 +11,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Armora-Labs/lifehack.git"
+    "url": "git+https://github.com/danger-noodles-58/lifehack.git"
   },
-  "author": "Grant Thomas",
+  "author": "Abe Henderson, Daniel Park, George Greer, Adrian Kormier",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Armora-Labs/lifehack/issues"
+    "url": "https://github.com/danger-noodles-58/lifehack/issues"
   },
-  "homepage": "https://github.com/Armora-Labs/lifehack#readme",
+  "homepage": "https://github.com/danger-noodles-58/lifehack/blob/main/README.md",
   "dependencies": {
     "bcryptjs": "^2.3.0",
     "body-parser": "^1.20.2",
@@ -42,6 +42,7 @@
     "concurrently": "^6.0.2",
     "cross-env": "^7.0.3",
     "css-loader": "^6.8.1",
+    "eslint": "^8.42.0",
     "file-loader": "^6.2.0",
     "html-webpack-plugin": "^5.5.1",
     "isomorphic-fetch": "^3.0.0",

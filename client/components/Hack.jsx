@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 
 const Hack = ({hacks}) => {
-  const { content, username, likes, dislikes } = hacks
+  const { content, displayname, likes, dislikes } = hacks
 
   // creates individual hack boxes
 
   return (
     <div className="aHack">
       <h2><p>{content}</p></h2><br />
-      <p>Submitted by : <span className='username-hack'>{username}</span></p>
+      <p>Submitted by : <span className='displayname-hack'>{displayname}</span></p>
       <button id="like" className="voteBtn">
         Like
       </button>
