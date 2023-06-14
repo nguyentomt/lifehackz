@@ -31,7 +31,7 @@ controller.getData = (req, res, next) => {
   db.query(categoryQuery)
     .then(data => {
       const { rows } = data
-      console.log('From Database: ', rows)
+      console.log('apiController: getData: From Database: ', rows)
       res.locals.data = rows
       return next()
     })
@@ -58,34 +58,51 @@ controller.makeHack = (req, res, next) => {
 
 // Post a new user to the database:
 controller.makeUser = (req, res, next) => {
-  const {name} = req.body
-  // console.log('reqbody', req.body)
-  // console.log('name in makeuser', name)
+  const { username, password } = req.body;
+  console.log('apiController: makeUser: username', username);
+  console.log('apiController: makeUser: password: ', password);
+  if (password.length < 4) {
+    res.locals.data = [];
+    return next();
+  }
+  else {
   // A SELECT query is required after the INSERT query to actually return the new user
-  const postUser = `INSERT INTO users (username, displayname) VALUES ('${name}' ,'${name}');
-  SELECT * FROM users WHERE username = '${name}';`
+  const postUser = `INSERT INTO users (username, password, displayname) VALUES ('${username}', '${password}', '${username}');
+  SELECT * FROM users WHERE username = '${username}';`
   db.query(postUser)
     .then(data => {
-      // console.log('data in makeUser', data)
+      console.log('apiController: makeUser: data in makeUser', data);
       const { rows } = data[1];
-      // console.log('From Database: ', rows)
+      console.log('apiController: makeUser: rows From Database: ', rows)
       res.locals.data = rows;
-      return next()
+      return next();
     })
+    .catch(err => next({
+      log: 'apiController: makeUser: Express error handler caught error in makeUser controller middleware',
+      status: 400,
+      message: { 'Failed to sign up with given credentials': err }
+    }));
+  }  
 }
 
 controller.getUser = (req, res, next) => {
-  const name = req.params.user;
-  console.log('name in getUser', name)
-  const getUserQuery =  `SELECT _id, displayname FROM users WHERE username = '${name}'`
+  const { username, password } = req.body;
+  
+  const getUserQuery =  `SELECT username, password, displayname FROM users WHERE username = '${username}' AND password = '${password}';`;
   db.query(getUserQuery)
     .then(data => {
-      // console.log('data from getusers', data)
-      const {rows} = data
-      res.locals.data = rows
+      console.log('apiController -> getUser -> Data: ', data)
+      const { rows } = data;
+      console.log('apiController -> getUser -> rows:', rows);
+      res.locals.data = rows;
       return next();
-    }
-  )
+    })
+    .catch(err => next({
+      log: 'apiController: getUser: Express error handler caught error in getUser controller middleware',
+      status: 400,
+      message: { 'Failed to log in with given credentials': err }
+    }));
+   
 }
 
 

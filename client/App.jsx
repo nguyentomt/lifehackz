@@ -1,11 +1,11 @@
-import React from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import Login from './components/Login';
-import HackCreator from './components/HackCreator';
-import MainDisplay from './components/MainDisplay';
-import { useEffect, useState } from 'react';
-import jwtDecode from 'jwt-decode';
-import { set } from 'lodash';
+import React from "react";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import Login from "./components/Login";
+import HackCreator from "./components/HackCreator";
+import MainDisplay from "./components/MainDisplay";
+import { useEffect, useState } from "react";
+import jwtDecode from "jwt-decode";
+import { set } from "lodash";
 
 const App = () => {
   const [user, setUser] = useState({});
@@ -33,7 +33,7 @@ const App = () => {
   //     googleuser = await responseFromCreatingUser.json();
   //     document.getElementById('signInDiv').hidden = true;
   //     setUser(googleuser[0]);
-  //   } 
+  //   }
   // }
   // function handleSignOut(event) {
   //   setUser({});
@@ -54,83 +54,117 @@ const App = () => {
   // }, []);
   // END GOOGLE OAUTH
 
-
-  
   async function makeUser(e) {
-    e.preventDefault();
-    const input = document.getElementById('create-account-input');
-    const name = input.value;
-    const fetchProps = {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({name})
-    };
-    const newUser = await fetch('/api/user', fetchProps).then(ans => ans.json());
-    setUser(newUser[0]);
-    input.value = '';
+    try {
+      e.preventDefault();
+      const username = document.getElementById("signup-username").value;
+      const password = document.getElementById("signup-password").value;
+      
+      const fetchProps = {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, password }),
+      };
+      const response = await fetch("/api/user", fetchProps);
+      if (response.ok) {
+        const data = await response.json();
+        if (data.length === 0) {
+          alert("Password should be 4-50 characters");
+          // setUser({displayname: "Wrong username or password"});
+        } else {
+        console.log('App.jsx: makeUser: data from server: ', data);
+        setUser(data[0]);
+        console.log('Successful signup!');
+        console.log("App.jsx: makeUser: User from state: ", user);
+        }
+        // console.log("Successful signup!");
+        // console.log("App.jsx: makeUser: Data from server", data);
+        // setUser(data[0]);
+      }
+      else console.log("Error occured while trying to sign up.");
+    } catch (error) {
+      console.log("App.jsx: makeUser: Error signing up: ", error);
+    }
   }
 
   async function loginUser(e) {
     try {
       e.preventDefault();
-      const input = document.getElementById('login-account-input');
-      const response = await fetch(`/api/user/${input.value}`);
-      const user = await response.json();
-      setUser(user[0]);
-      input.value = '';
+      const username = document.getElementById("login-username").value;
+      const password = document.getElementById("login-password").value;
+      // const response = await fetch(`/api/user/${username, password}`);
+      const postData = {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, password }),
+      };
+      const response = await fetch(`/api/user/${username}`, postData);
+      if (response.ok) {
+        const data = await response.json();
+        if (data.length === 0) {
+          alert("WRONG!");
+          // setUser({displayname: "Wrong username or password"});
+        } else {
+        console.log('App.jsx: loginUser: data from server: ', data);
+        setUser(data[0]);
+        console.log('Successful login!');
+        }
+      } else
+        console.log('App.jsx: loginUser: Error occured while trying to log in.');
     } catch (error) {
       console.log(`Failed to log in: ${error}`);
     }
   }
-  
+
   async function changeDisplayName(e) {
-    console.log('clicked displayname')
+    console.log("clicked displayname");
     e.preventDefault();
-    const input = document.getElementById('change-displayname');
+    const input = document.getElementById("change-displayname");
     // console.log(input.value);
     const displayName = input.value;
     const fetchProps = {
-      method: 'PATCH',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({id: user.id, newDisplayName: displayName})
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ id: user.id, newDisplayName: displayName }),
     };
-    const response = await fetch(`/api/user/`, fetchProps)
-    const displayNameAfter = await response.json();
-    console.log('Changed user: ', displayNameAfter[0]);
-    setUser(displayNameAfter[0]);
-    input.value = '';
+    const response = await fetch(`/api/user/`, fetchProps);
+    const data = await response.json();
+    console.log("Changed user: ", data[0]);
+    setUser(data[0]);
+    input.value = "";
   }
 
   return (
     <Router>
       <h3>{user.displayname}</h3>
       <div id="signInDiv"></div>
-      { Object.keys(user).length != 0 &&
-      <>
-        <button id="signOutBttn" onClick={ e => handleSignOut(e)}>Sign Out</button>
-        <input id='change-displayname'/>
-        <button id='change-displayname-bttn' onClick={changeDisplayName}>Change Display Name</button>
-      </>
-      }
-      
-      { user && 
+      {Object.keys(user).length != 0 && (
+        <>
+          <button id="signOutBttn" onClick={(e) => handleSignOut(e)}>
+            Sign Out
+          </button>
+          <input id="change-displayname" />
+          <button id="change-displayname-bttn" onClick={changeDisplayName}>
+            Change Display Name
+          </button>
+        </>
+      )}
+
+      {user && (
         <div>
-          <img src = {user.picture}/>
+          <img src={user.picture} />
           <h3>{user.name}</h3>
         </div>
-      }
+      )}
       <Switch>
         <Route path="/">
-          <Login makeUser={makeUser} loginUser={loginUser}/>
+          <Login makeUser={makeUser} loginUser={loginUser} />
         </Route>
       </Switch>
-      <MainDisplay class='hack-items-container' />
-      <HackCreator user={user}/>
+      <MainDisplay class="hack-items-container" />
+      <HackCreator user={user} />
     </Router>
   );
 };
 
 export default App;
-
-
-
