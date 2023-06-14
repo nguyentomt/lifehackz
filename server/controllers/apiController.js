@@ -61,6 +61,11 @@ controller.makeUser = (req, res, next) => {
   const { username, password } = req.body;
   console.log('apiController: makeUser: username', username);
   console.log('apiController: makeUser: password: ', password);
+  if (password.length < 4) {
+    res.locals.data = [];
+    return next();
+  }
+  else {
   // A SELECT query is required after the INSERT query to actually return the new user
   const postUser = `INSERT INTO users (username, password, displayname) VALUES ('${username}', '${password}', '${username}');
   SELECT * FROM users WHERE username = '${username}';`
@@ -77,6 +82,7 @@ controller.makeUser = (req, res, next) => {
       status: 400,
       message: { 'Failed to sign up with given credentials': err }
     }));
+  }  
 }
 
 controller.getUser = (req, res, next) => {

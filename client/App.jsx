@@ -68,10 +68,18 @@ const App = () => {
       const response = await fetch("/api/user", fetchProps);
       if (response.ok) {
         const data = await response.json();
-        console.log("Successful signup!");
-        console.log("App.jsx: makeUser: Data from server", data);
+        if (data.length === 0) {
+          alert("Password should be 4-50 characters");
+          // setUser({displayname: "Wrong username or password"});
+        } else {
+        console.log('App.jsx: makeUser: data from server: ', data);
         setUser(data[0]);
+        console.log('Successful signup!');
         console.log("App.jsx: makeUser: User from state: ", user);
+        }
+        // console.log("Successful signup!");
+        // console.log("App.jsx: makeUser: Data from server", data);
+        // setUser(data[0]);
       }
       else console.log("Error occured while trying to sign up.");
     } catch (error) {

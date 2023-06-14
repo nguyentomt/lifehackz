@@ -14,19 +14,19 @@ router.post('/',
     res.status(200).send([])
   })
 
-  router.post('/user/:username',
+router.post('/user/:username',
   apiController.getUser,
   (req, res, next) => {
     res.status(200).json(res.locals.data);
   })
 
-  router.post('/user',
+router.post('/user',
   apiController.makeUser,
   (req, res, next) => {
     res.status(200).json(res.locals.data);
   })
 
-  router.patch('/user',
+router.patch('/user',
   apiController.changeDisplayName,
   (req, res, next) => {
     res.status(200).json(res.locals.data);
