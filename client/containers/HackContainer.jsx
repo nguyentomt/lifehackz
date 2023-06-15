@@ -2,9 +2,6 @@ import React, { useEffect, useState } from 'react';
 import Hack from '../components/Hack'
 
 const HackContainer = ({ category, setCategory, hacks, setHacks }) => {
-// Do we need to declare state in HackContainer in order to rerender once a hack is submitted?
-// e.g. const [hacklist, setHacklist] = useState([])
-// setHacklist(hacklist)
 
   async function getHacks() {
     try {
@@ -21,10 +18,6 @@ const HackContainer = ({ category, setCategory, hacks, setHacks }) => {
     getHacks();
   }, [category]);
 
-  // useEffect(() => {
-    // if ()
-  //   getHacks();
-  // }, [hacks]);
   
   const hackItems = [];
   for (let i = 0; i < hacks.length; i++) {
@@ -32,7 +25,7 @@ const HackContainer = ({ category, setCategory, hacks, setHacks }) => {
   }
 
   return (
-    <div>
+    <div className='hack-items-container'>
       {/* <Hack category={category} setCategory={setCategory} hacks={hacks} /> */}
       {hackItems}
     </div>

@@ -1,10 +1,13 @@
 import React from 'react';
 import Login from '../components/Login.jsx';
 
-const LoginContainer = ({ makeUser, loginUser }) => {
+const LoginContainer = ({ setUser }) => {
+
+
+  
   return (
     <div>
-      <Login makeUser={makeUser} loginUser={loginUser} />
+      <Login setUser={setUser} />
     </div>
   );
 };

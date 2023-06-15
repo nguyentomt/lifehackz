@@ -21,12 +21,13 @@ const HackCreator = ({ user, category, setCategory, hacks, setHacks }) => {
       .then((response) => response.json())
       .then((postData) => {
         console.log(postData);
+        getHacks();
       })
       .catch((err) => console.log('Error ', err));
 
       // const input = document.querySelector('.newHack');
       // input.value = ''; // <<<<<<======== COME BACK TO THIS
-      // setContent('');
+      setContent('');
   };
 
   const handleContentChange = (event) => setContent(event.target.value);
