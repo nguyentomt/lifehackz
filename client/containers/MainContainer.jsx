@@ -11,7 +11,7 @@ const MainContainer = ({ user, setUser }) => {
   return (
     <div>
       <NavBarContainer user={user} setUser={setUser} category={category} setCategory={setCategory} hacks={hacks} setHacks={setHacks} />
-      <HackContainer category={category} setCategory={setCategory} hacks={hacks} />
+      <HackContainer category={category} setCategory={setCategory} hacks={hacks} setHacks={setHacks} />
     </div>
   );
 };
