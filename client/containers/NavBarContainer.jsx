@@ -11,7 +11,7 @@ const NavBarContainer = ({ user, setUser, category, setCategory, hacks, setHacks
     <div>
       <ChangeDisplayName user={user} setUser={setUser} />
       <CatSelector category={category} setCategory={setCategory} />
-      <HackCreator category={category} setCategory={setCategory} />
+      <HackCreator user={user} category={category} setCategory={setCategory} hacks={hacks} setHacks={setHacks} />
     </div>
   );
 };

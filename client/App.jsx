@@ -117,24 +117,6 @@ const App = () => {
     }
   }
 
-  // async function changeDisplayName(e) {
-  //   console.log("clicked displayname");
-  //   e.preventDefault();
-  //   const input = document.getElementById("change-displayname");
-  //   // console.log(input.value);
-  //   const displayName = input.value;
-  //   const fetchProps = {
-  //     method: "PATCH",
-  //     headers: { "Content-Type": "application/json" },
-  //     body: JSON.stringify({ id: user.id, newDisplayName: displayName }),
-  //   };
-  //   const response = await fetch(`/api/user/`, fetchProps);
-  //   const data = await response.json();
-  //   console.log("Changed user: ", data[0]);
-  //   setUser(data[0]);
-  //   input.value = "";
-  // }
-
   // return (
   //   <Router>
   //     <h3>{user.displayname}</h3>
