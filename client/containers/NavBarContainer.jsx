@@ -14,6 +14,6 @@ const NavBarContainer = ({ user, setUser, category, setCategory, hacks, setHacks
       <HackCreator user={user} category={category} setCategory={setCategory} hacks={hacks} setHacks={setHacks} />
     </div>
   );
-};
+}
 
 export default NavBarContainer;
