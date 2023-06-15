@@ -6,38 +6,6 @@ import jwtDecode from "jwt-decode";
 const Login = ({ setUser }) => {
     const navigate = useNavigate();
 
-    // async function makeUser(e) {
-    //     try {
-    //       e.preventDefault();
-    //       const username = document.getElementById("signup-username").value;
-    //       const password = document.getElementById("signup-password").value;
-          
-    //       const fetchProps = {
-    //         method: "POST",
-    //         headers: { "Content-Type": "application/json" },
-    //         body: JSON.stringify({ username, password }),
-    //       };
-    //       const response = await fetch("/api/user", fetchProps);
-    //       if (response.ok) {
-    //         const data = await response.json();
-    //         if (data.length === 0) {
-    //           alert("Password should be 4-50 characters");
-    //           // setUser({displayname: "Wrong username or password"});
-    //         } else {
-    //         console.log('App.jsx: makeUser: data from server: ', data);
-    //         setUser(data[0]);
-    //         console.log('Successful signup!');
-    //         navigate('/main');
-    //         }
-    //         // console.log("Successful signup!");
-    //         // console.log("App.jsx: makeUser: Data from server", data);
-    //         // setUser(data[0]);
-    //       }
-    //       else console.log("Error occurred while trying to sign up.");
-    //     } catch (error) {
-    //       console.log("App.jsx: makeUser: Error signing up: ", error);
-    //     }
-    //   }
     async function makeUser(e) {
         try {
           e.preventDefault();
@@ -74,7 +42,6 @@ const Login = ({ setUser }) => {
           e.preventDefault();
           const username = document.getElementById("login-username").value;
           const password = document.getElementById("login-password").value;
-          // const response = await fetch(`/api/user/${username, password}`);
           const postData = {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -85,7 +52,6 @@ const Login = ({ setUser }) => {
             const data = await response.json();
             if (data.length === 0) {
               alert("WRONG!");
-              // setUser({displayname: "Wrong username or password"});
             } else {
             console.log('App.jsx: loginUser: data from server: ', data);
             setUser(data[0]);
@@ -103,7 +69,6 @@ const Login = ({ setUser }) => {
 // FOR GOOGLE OAUTH //
   async function handleCallbackResponse(response) {
     const userObject = jwtDecode(response.credential);
-    // console.log('Login: handCallbackResponse: userObject: ', userObject);
     const username = userObject.name;
     let googleUser;
 
@@ -111,32 +76,27 @@ const Login = ({ setUser }) => {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({username, password: ""})
-      };
+    };
     // Check if the user exists in the users table, if they do, set them to the current user
-    googleUser = await fetch(`/api/user`, fetchProps);
+    googleUser = await fetch(`/api/user/${username}`, fetchProps);
     console.log('Login: handleCallbackResponse: googleUser response from database: ', googleUser);
-    if (googleUser.ok) {
       const checkIfUserExists = await googleUser.json();
+      console.log('Login: handleCallbackResponse: does user exist in database?: ', checkIfUserExists);
+      
       if (checkIfUserExists.length > 0) {
         console.log('Login -> handleCallbackResponse -> Entering line 83 if statement');
         document.getElementById('oauthBtn').hidden = true;
         setUser(checkIfUserExists[0]);
         navigate('/main');
-      }
-      else console.log('Login -> handleCallbackResponse -> Error checking if google user exists');
-    }
-    // Create a new user and set them to the current user
-    else {
+      } else {
       const responseFromCreatingUser = await fetch(`/api/user/`, fetchProps);
-    //   if (responseFromCreatingUser.ok) {
-          googleUser = await responseFromCreatingUser.json();
-          console.log('Google User comes back as: ', googleUser)
-          document.getElementById('oauthBtn').hidden = true;
-          setUser(googleUser[0]);
-          navigate('/main');
-    //   }
-    //   else console.log('Login -> handleCallbackResponse -> Error posting googleUser to database');
-    }
+      googleUser = await responseFromCreatingUser.json();
+      console.log('Google User comes back as: ', googleUser)
+      document.getElementById('oauthBtn').hidden = true;
+      setUser(googleUser[0]);
+      navigate('/main');
+      }
+
   }
 
   function handleSignOut(event) {

@@ -4,14 +4,7 @@ const controller = {}
 
 // Get data from the database:
 controller.getData = (req, res, next) => {
-
-  // console.log('Category: ', req.params);
   const { category } = req.params;
-  // console.log('APICONTROLLER', category);
-
-  // hacks: content, likes, dislikes // h
-  // users: displayname // u
-  // Categories: Name // c
 
   // SQL query string to return all hacks in database:
   const allHackQuery = `SELECT h.content, h.likes, h.dislikes, u.displayname, c.name AS category 
@@ -31,7 +24,7 @@ controller.getData = (req, res, next) => {
   db.query(categoryQuery)
     .then(data => {
       const { rows } = data
-      // console.log('apiController: getData: From Database: ', rows)
+      console.log('apiController: getData: From Database: ', rows)
       res.locals.data = rows
       return next()
     })
@@ -59,17 +52,15 @@ controller.makeHack = (req, res, next) => {
 // Post a new user to the database:
 controller.makeUser = (req, res, next) => {
   const { username, password } = req.body;
-  // console.log('apiController: makeUser: username', username);
-  // console.log('apiController: makeUser: password: ', password);
 
   // A SELECT query is required after the INSERT query to actually return the new user
   const postUser = `INSERT INTO users (username, password, displayname) VALUES ('${username}', '${password}', '${username}');
   SELECT * FROM users WHERE username = '${username}';`
   db.query(postUser)
     .then(data => {
-      console.log('apiController: makeUser: data in makeUser', data);
+      // console.log('apiController: makeUser: data in makeUser', data);
       const { rows } = data[1];
-      console.log('apiController: makeUser: rows From Database: ', rows);
+      // console.log('apiController: makeUser: rows From Database: ', rows);
       res.locals.data = rows;
       return next();
     })
@@ -86,9 +77,9 @@ controller.getUser = (req, res, next) => {
   const getUserQuery =  `SELECT username, password, displayname FROM users WHERE username = '${username}' AND password = '${password}';`;
   db.query(getUserQuery)
     .then(data => {
-      console.log('apiController -> getUser -> Data: ', data)
+      // console.log('apiController -> getUser -> Data: ', data)
       const { rows } = data;
-      console.log('apiController -> getUser -> rows:', rows);
+      // console.log('apiController -> getUser -> rows:', rows);
       res.locals.data = rows;
       return next();
     })
@@ -122,14 +113,3 @@ controller.changeDisplayName = (req, res, next) => {
 
 module.exports = controller
 
-
-
-/* Syntax for creating a new sql sequence in the terminal */
-// CREATE SEQUENCE user_sequence
-// start with 2
-// increment by 1
-// minvalue 0
-// maxvalue 999
-// cycle;
-
-// SELECT * FROM information_schema.sequences;
