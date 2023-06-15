@@ -7,7 +7,7 @@
 
 
 body {
-  background-color: pink;
+  background-color: rgb(39, 39, 39);
   // border: 1px solid orange;
   margin: 1em;
 }
@@ -15,7 +15,7 @@ body {
 ////////////////////////
 // Not doing anything //
 h1 {
-  text-align: center;
+text-align: center;
 }
 
 /////////////////////////////////
@@ -35,7 +35,7 @@ h1 {
 }
 
 .catselector {
-  border: 1px solid grey;
+  border: 1px solid rgb(85, 85, 85);
   border-radius: 10px;
   box-shadow: 5px 5px 10px grey;
   display: flex;
@@ -45,10 +45,12 @@ h1 {
 }
 
 .aHack {
-  border: 1px dotted grey;
+  border: 1px solid rgb(71, 71, 71);
   border-radius: 5px;
-  background-color: #CB416B;
-  box-shadow: 5px 5px 10px #CB416B;
+  background-color: #202020b4;
+  box-shadow: rgba(255, 1, 149, 0.25) 0px 2px 9px -1px, rgba(216, 0, 108, 0.3) 0px 1px 3px -1px;
+  color: rgb(219, 219, 219);
+  font-family: 'Tajawal', sans-serif;
   width: 23%;
   height: 15%;
   display: flex;

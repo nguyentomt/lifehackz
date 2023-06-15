@@ -1,14 +1,14 @@
-import React from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import Login from "./components/Login";
+import React, { useEffect, useState } from "react";
+import LoginContainer from "./containers/LoginContainer";
 import HackCreator from "./components/HackCreator";
-import MainDisplay from "./components/MainDisplay";
-import { useEffect, useState } from "react";
+import MainContainer from "./containers/MainContainer";
 import jwtDecode from "jwt-decode";
 import { set } from "lodash";
+import { Routes, Route, useNavigate } from "react-router-dom";
 
 const App = () => {
   const [user, setUser] = useState({});
+  const navigate = useNavigate();
 
   // FOR GOOGLE OAUTH
   // async function handleCallbackResponse(response) {
@@ -75,7 +75,7 @@ const App = () => {
         console.log('App.jsx: makeUser: data from server: ', data);
         setUser(data[0]);
         console.log('Successful signup!');
-        console.log("App.jsx: makeUser: User from state: ", user);
+        navigate('/main');
         }
         // console.log("Successful signup!");
         // console.log("App.jsx: makeUser: Data from server", data);
@@ -108,6 +108,7 @@ const App = () => {
         console.log('App.jsx: loginUser: data from server: ', data);
         setUser(data[0]);
         console.log('Successful login!');
+        navigate('/main');
         }
       } else
         console.log('App.jsx: loginUser: Error occured while trying to log in.');
@@ -116,54 +117,60 @@ const App = () => {
     }
   }
 
-  async function changeDisplayName(e) {
-    console.log("clicked displayname");
-    e.preventDefault();
-    const input = document.getElementById("change-displayname");
-    // console.log(input.value);
-    const displayName = input.value;
-    const fetchProps = {
-      method: "PATCH",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ id: user.id, newDisplayName: displayName }),
-    };
-    const response = await fetch(`/api/user/`, fetchProps);
-    const data = await response.json();
-    console.log("Changed user: ", data[0]);
-    setUser(data[0]);
-    input.value = "";
-  }
+  // async function changeDisplayName(e) {
+  //   console.log("clicked displayname");
+  //   e.preventDefault();
+  //   const input = document.getElementById("change-displayname");
+  //   // console.log(input.value);
+  //   const displayName = input.value;
+  //   const fetchProps = {
+  //     method: "PATCH",
+  //     headers: { "Content-Type": "application/json" },
+  //     body: JSON.stringify({ id: user.id, newDisplayName: displayName }),
+  //   };
+  //   const response = await fetch(`/api/user/`, fetchProps);
+  //   const data = await response.json();
+  //   console.log("Changed user: ", data[0]);
+  //   setUser(data[0]);
+  //   input.value = "";
+  // }
 
+  // return (
+  //   <Router>
+  //     <h3>{user.displayname}</h3>
+  //     <div id="signInDiv"></div>
+  //     {Object.keys(user).length != 0 && (
+  //       <>
+  //         <button id="signOutBttn" onClick={(e) => handleSignOut(e)}>
+  //           Sign Out
+  //         </button>
+  //         <input id="change-displayname" />
+  //         <button id="change-displayname-bttn" onClick={changeDisplayName}>
+  //           Change Display Name
+  //         </button>
+  //       </>
+  //     )}
+
+  //     {user && (
+  //       <div>
+  //         <img src={user.picture} />
+  //         <h3>{user.name}</h3>
+  //       </div>
+  //     )}
+  //     <Switch>
+  //       <Route path="/">
+  //         <Login makeUser={makeUser} loginUser={loginUser} />
+  //       </Route>
+  //     </Switch>
+  //     <MainDisplay class="hack-items-container" />
+  //     <HackCreator user={user} />
+  //   </Router>
+  // );
   return (
-    <Router>
-      <h3>{user.displayname}</h3>
-      <div id="signInDiv"></div>
-      {Object.keys(user).length != 0 && (
-        <>
-          <button id="signOutBttn" onClick={(e) => handleSignOut(e)}>
-            Sign Out
-          </button>
-          <input id="change-displayname" />
-          <button id="change-displayname-bttn" onClick={changeDisplayName}>
-            Change Display Name
-          </button>
-        </>
-      )}
-
-      {user && (
-        <div>
-          <img src={user.picture} />
-          <h3>{user.name}</h3>
-        </div>
-      )}
-      <Switch>
-        <Route path="/">
-          <Login makeUser={makeUser} loginUser={loginUser} />
-        </Route>
-      </Switch>
-      <MainDisplay class="hack-items-container" />
-      <HackCreator user={user} />
-    </Router>
+    <Routes>
+      <Route path='/' element={<LoginContainer makeUser={makeUser} loginUser={loginUser} />} />
+      <Route path='/main' element={<MainContainer user={user} setUser={setUser} />} />
+    </Routes>
   );
 };
 

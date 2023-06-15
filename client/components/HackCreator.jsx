@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 
-const HackCreator = ({user}) => {
+const HackCreator = ({ user, category, setCategory }) => {
   const [content, setContent] = useState('');
-  const [category, setCategory] = useState('Codesmith');
+  
 
 
   // Event handler for add new hack form submission
