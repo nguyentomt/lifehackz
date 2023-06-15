@@ -28,7 +28,7 @@ const HackContainer = ({ category, setCategory, hacks, setHacks }) => {
   }
 
   return (
-    <div>
+    <div className='hack-items-container'>
       {/* <Hack category={category} setCategory={setCategory} hacks={hacks} /> */}
       {hackItems}
     </div>
