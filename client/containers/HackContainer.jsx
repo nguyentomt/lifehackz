@@ -21,10 +21,6 @@ const HackContainer = ({ category, setCategory, hacks, setHacks }) => {
     getHacks();
   }, [category]);
 
-  // useEffect(() => {
-    // if ()
-  //   getHacks();
-  // }, [hacks]);
   
   const hackItems = [];
   for (let i = 0; i < hacks.length; i++) {
