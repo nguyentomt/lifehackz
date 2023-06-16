@@ -92,23 +92,70 @@ controller.getUser = (req, res, next) => {
 }
 
 
-controller.changeDisplayName = (req, res, next) => {
-  const {newUsername} = req.body;
-  const {id} = req.body;
-  // console.log('reqbody', req.body)
-  // A SELECT query is required after the INSERT query to actually return the new user
-  const postUser = `UPDATE users SET displayname = '${newUsername}' WHERE _id = ${id};
-  SELECT * FROM users WHERE _id = ${id};`
-  db.query(postUser)
-    .then(data => {
-      // console.log('data in makeUser', data)
-      const { rows } = data[1]
-      // console.log('From Database: ', rows)
-      res.locals.data = rows
-      return next()
-    })
-}
+// controller.changeDisplayName = (req, res, next) => {
+//   const {newUsername} = req.body;
+//   const {id} = req.body;
+//   // console.log('reqbody', req.body)
+//   // A SELECT query is required after the INSERT query to actually return the new user
+//   const postUser = `UPDATE users SET displayname = '${newUsername}' WHERE _id = ${id};
+//   SELECT * FROM users WHERE _id = ${id};`
+//   db.query(postUser)
+//     .then(data => {
+//       // console.log('data in makeUser', data)
+//       const { rows } = data[1]
+//       // console.log('From Database: ', rows)
+//       res.locals.data = rows
+//       return next()
+//     })
 
+  
+// }
+
+// ===== WORK IN PROGRESS ========== WORK IN PROGRESS ========== WORK IN PROGRESS ========== WORK IN PROGRESS =====
+controller.updateLikes = (req, res, next) => {
+
+  const { likes, _id } = req.body;
+  console.log('THIS IS REQ.BODY!!!', req.body);
+
+  const updateLikesQuery = `UPDATE hacks SET likes = ${likes} + 1 WHERE _id = ${_id};
+  SELECT likes FROM hacks WHERE _id = ${_id}`;
+  
+  db.query(updateLikesQuery)
+  .then(data => {
+    res.locals.data = data;
+    console.log('apiController -> updateLikes -> db query: ', data);
+    return next();
+  })
+  .catch(err => next({
+    log: 'apiController: Express error handler caught error in updateLikes controller middleware',
+    status: 400,
+    message: { 'Failed to update like button': err }
+  }));
+
+};
+// ===== WORK IN PROGRESS ========== WORK IN PROGRESS ========== WORK IN PROGRESS ========== WORK IN PROGRESS =====
+
+controller.updateDislikes = (req, res, next) => {
+
+  const { dislikes, _id } = req.body;
+  console.log('THIS IS REQ.BODY!!!', req.body);
+
+  const updateDislikesQuery = `UPDATE hacks SET dislikes = ${dislikes} + 1 WHERE _id = ${_id};
+  SELECT dislikes FROM hacks WHERE _id = ${_id}`;
+  
+  db.query(updateDislikesQuery)
+  .then(data => {
+    res.locals.data = data;
+    console.log('apiController -> updateDislikes -> db query: ', data);
+    return next();
+  })
+  .catch(err => next({
+    log: 'apiController: Express error handler caught error in updateDislikes controller middleware',
+    status: 400,
+    message: { 'Failed to update dislike button': err }
+  }));
+
+};
 
 
 module.exports = controller
