@@ -9,7 +9,7 @@
 body {
   background-color: rgb(32, 32, 32);
   // border: 1px solid orange;
-  margin: 1em;
+  // margin: 1em;
 }
 
 h1 {
@@ -31,7 +31,7 @@ text-align: center;
     border-radius: .5rem;
     height: 10rem;
     width: 95%;
-    background: linear-gradient(180deg, rgb(39, 39, 39), rgba(0, 0, 0, 0), 10%);
+    background: linear-gradient(180deg, rgb(32, 32, 32), 80%, rgba(0, 0, 0, 0));
   }
 }
 
@@ -61,7 +61,7 @@ text-align: center;
     background-image: linear-gradient(144deg,#AF40FF, #5B42F3 50%,#00DDEB);
     font-size: 1rem;
     font-weight: 700;
-    color: white;
+    color: rgb(255, 255, 255);
   }
   button:hover {
     box-shadow: 0 .2rem .5rem rgba(255, 0, 217, 0.5);
@@ -140,9 +140,9 @@ text-align: center;
 
 .hackCard {
   border: 1px solid rgb(71, 71, 71);
-  border-radius: 5px;
+  border-radius: 8px;
   background-color: #202020b4;
-  box-shadow: rgba(255, 1, 149, 0.25) 0px 2px 9px -1px, rgba(216, 0, 108, 0.3) 0px 1px 3px -1px;
+  box-shadow: rgba(255, 1, 149, 0.144) 5px 6px 12px 0px, rgba(216, 0, 108, 0.3) 0px 1px 4px -1px;
   color: rgb(219, 219, 219);
   font-family: 'Tajawal', sans-serif;
   width: 18rem;
@@ -165,8 +165,32 @@ text-align: center;
   }
   #likeAndDislike {
     // background-image: url('../assets/LifeHx.png');
-    
+    width: 15rem;
+    display: flex;
+    justify-content: space-around;
+    button {
+      margin-right: -3rem;
+      border-radius: 1rem;
+      background-color: rgb(94, 94, 94);
+      font-size: .9rem;
+      color: rgb(224, 224, 224);
+      border: none;
+      box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
+    }
+    span {
+      padding-top: .5rem;
+      font-size: 1.5rem;
+      padding-left: 1rem;
+      font-weight: bold;
+      color: rgb(223, 223, 223);
+      text-shadow: .0rem .5rem 1rem rgba(249, 48, 219, 0.829), 0rem -.5rem 1rem rgba(249, 48, 219, 0.829);
+    }
   }
+}
+
+.hackCard:hover {
+  background-color: rgba(0, 0, 0, 0.199);
+  box-shadow: #af40ff2d 0 2rem 2.5rem -30px, #5a42f3fb 0 1rem 1rem -20px;
 }
 
 .displayname-hack {
