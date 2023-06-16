@@ -8,6 +8,13 @@
 
 body {
   background-color: rgb(39, 39, 39);
+  // background-image: url('../assets/Background.png') no-repeat center center fixed;
+  // background: url('../assets/Background.png') no-repeat center center fixed; 
+  // -webkit-background-size: cover;
+  // -moz-background-size: cover;
+  // -o-background-size: cover;
+  background-size: cover;
+
   // border: 1px solid orange;
   margin: 1em;
 }
