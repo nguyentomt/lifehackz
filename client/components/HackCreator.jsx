@@ -44,18 +44,18 @@ const HackCreator = ({ user, category, setCategory, hacks, setHacks }) => {
 
 
   return (
-    <div>
-      <form onSubmit={handleFormSubmit}>
+    <div id="hackCreator">
+      <form id="hackCreatorForm"onSubmit={handleFormSubmit}>
         <input
           className="newHack"
           name="newHack"
           type="text"
           value={content}
           onChange={handleContentChange}
-          placeholder="Add Hack"
+          placeholder="Add new hack"
         />
 
-        <label htmlFor="categories">Category:</label>
+        <label htmlFor="categories"></label>
         <select
           id="categories"
           name="categories"

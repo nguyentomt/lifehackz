@@ -7,17 +7,19 @@ const Hack = ({ category, setCategory, hacks }) => {
   // creates individual hack boxes
 
   return (
-    <div className="aHack">
+    <div className="hackCard">
       <h2><p>{content}</p></h2><br />
       <p>Submitted by : <span className='displayname-hack'>{displayname}</span></p>
-      <button id="like" className="voteBtn">
-        Like
-      </button>
-      <span>{likes}</span>
-      <button id="dislike" className="voteBtn">
-        Dislike
-      </button>
-      <span>{dislikes}</span>
+      <div id='likeAndDislike'>
+        <button id="like" className="voteBtn">
+          Like
+        </button>
+        <span>{likes}</span>
+        <button id="dislike" className="voteBtn">
+          Dislike
+        </button>
+        <span>{dislikes}</span>
+      </div>
     </div>
   );
 };

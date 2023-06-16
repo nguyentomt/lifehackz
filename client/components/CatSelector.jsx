@@ -13,9 +13,9 @@ const CatSelector = ({ category, setCategory }) => {
   return (
     <div className='catSelector'>
       <label>
-        Choose a category:
+        {/* Choose a category: */}
         <select value={category} onChange={handleChange} className="categories">
-          <option value="Categories">Categories</option>
+          <option value="" disabled selected>Choose Category</option>
           <option value="Codesmith">Codesmith</option>
           <option value="Time">Time</option>
           <option value="Money">Money</option>
