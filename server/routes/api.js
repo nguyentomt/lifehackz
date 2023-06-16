@@ -26,8 +26,20 @@ router.post('/user',
     res.status(200).json(res.locals.data);
   })
 
-router.patch('/user',
-  apiController.changeDisplayName,
+// router.patch('/user',
+//   apiController.changeDisplayName,
+//   (req, res, next) => {
+//     res.status(200).json(res.locals.data);
+//   })
+
+router.patch('/likes',
+  apiController.updateLikes,
+  (req, res, next) => {
+    res.status(200).json(res.locals.data);
+  })
+  
+router.patch('/dislikes',
+  apiController.updateDislikes,
   (req, res, next) => {
     res.status(200).json(res.locals.data);
   })
