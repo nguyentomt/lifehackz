@@ -10,38 +10,7 @@ const App = () => {
   const [user, setUser] = useState({});
   const navigate = useNavigate();
 
-  // return (
-  //   <Router>
-  //     <h3>{user.displayname}</h3>
-  //     <div id="signInDiv"></div>
-  //     {Object.keys(user).length != 0 && (
-  //       <>
-  //         <button id="signOutBttn" onClick={(e) => handleSignOut(e)}>
-  //           Sign Out
-  //         </button>
-  //         <input id="change-displayname" />
-  //         <button id="change-displayname-bttn" onClick={changeDisplayName}>
-  //           Change Display Name
-  //         </button>
-  //       </>
-  //     )}
 
-  //     {user && (
-  //       <div>
-  //         <img src={user.picture} />
-  //         <h3>{user.name}</h3>
-  //       </div>
-  //     )}
-  //     <Switch>
-  //       <Route path="/">
-  //         <Login makeUser={makeUser} loginUser={loginUser} />
-  //       </Route>
-  //     </Switch>
-  //     <MainDisplay class="hack-items-container" />
-  //     <HackCreator user={user} />
-  //   </Router>
-  // );
-  
   return (
     <Routes>
       <Route path='/' element={<LoginContainer setUser={setUser} />} />

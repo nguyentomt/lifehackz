@@ -9,7 +9,7 @@ const MainContainer = ({ user, setUser }) => {
 
   // Render NavBarContainer and HackContainer
   return (
-    <div>
+    <div id='mainContainer'>
       <NavBarContainer user={user} setUser={setUser} category={category} setCategory={setCategory} hacks={hacks} setHacks={setHacks} />
       <HackContainer category={category} setCategory={setCategory} hacks={hacks} setHacks={setHacks} />
     </div>

@@ -21,9 +21,9 @@ const ChangeDisplayName = ({ user, setUser }) => {
   }
   
   return (
-    <div>
-      <input id="change-displayname" placeholder='New display name'/>
-      <button id="change-displayname-bttn" onClick={changeDisplayName}>
+    <div id="changeDisplayName">
+      <input id="change-displayname-input" placeholder='New display name'/>
+      <button id="change-displayname-btn" onClick={changeDisplayName}>
         Change Display Name
       </button>
     </div>
