@@ -21,7 +21,7 @@ const HackContainer = ({ category, setCategory, hacks, setHacks }) => {
   
   const hackItems = [];
   for (let i = 0; i < hacks.length; i++) {
-    hackItems.push(<Hack hacks={hacks[i]} category={category} setCategory={setCategory}/>);
+    hackItems.push(<Hack key={i} hacks={hacks[i]} setHacks={setHacks} category={category} setCategory={setCategory}/>);
   }
 
   return (
