@@ -2,55 +2,52 @@
 An app to learn and share lifehacks.
 
 # Odd Capitilazions
-The Dev branch has a capital 'D' (but the 'main' branch is all lower cased)
-The table 'Categories' has a capital 'C'!
 Use single quotes when inserting strings
 
 
 INSERT INTO hacks (ID, content, likes, dislikes, user_id, category_id) VALUES (2,'love yourself', 0,0, 1, 1);
 
 SQL Tables Cheat Sheet:											
-Categories: ID,	Name
-users:	ID, googlename, username
+categories: ID,	Name
+users:	ID, username, displayname
 hacks:	ID, content, likes, dislikes, user_id, category_id
 
 
 # A note on the users table
-This table has three columns: ID, googlename, username.
+This table has three columns: ID, username, displayname.
 - ID is the primary key.
-- googlename acts as the name that either comes from Google OAuth or is entered as a login name (used to log in).
-- username actuallys acts as a displayname that is rendered in the hacks.
+- username acts as the name that either comes from Google OAuth or is entered as a login name (used to log in).
+- displayname actuallys acts as a displayname that is rendered in the hacks.
 
 
 
 
 # This was the query to create the hacks table
 CREATE TABLE hacks (
-        ID int NOT NULL PRIMARY KEY,
+        _id SERIAL PRIMARY KEY,
         content varchar(1000),
         likes int,
         dislikes int,
         user_id int,
         category_id int,
-        CONSTRAINT fk_user FOREIGN KEY(user_id) REFERENCES users(ID),
-        CONSTRAINT fk_Category FOREIGN KEY(category_id) REFERENCES Categories(ID)
+        CONSTRAINT fk_user FOREIGN KEY(user_id) REFERENCES users(_id),
+        CONSTRAINT fk_category FOREIGN KEY(category_id) REFERENCES categories(_id)
 );
 
-*Beware of the Capital C*
-
-CREATE TABLE Categories (
-        ID int NOT NULL PRIMARY KEY,
-        Name varchar(1000) NOT NULL
+CREATE TABLE categories (
+        _id SERIAL PRIMARY KEY,
+        name varchar(1000) NOT NULL
 );
 
 CREATE TABLE users (
-        ID int NOT NULL PRIMARY KEY,
-        googlename varchar(1000),
-        username varchar(1000) UNIQUE
+        _id SERIAL PRIMARY KEY,
+        username varchar(50) NOT NULL UNIQUE,
+        password varchar(50) NOT NULL,
+        displayname varchar(50) UNIQUE
 );
 
 The tables use sequences to generate the next primary key.
-The sequence is call 'hack_sequence' and is passed into the invocation of nextVal() as seen in apiController.js in the 'makeHack' func
+The sequence is called 'hack_sequence' and is passed into the invocation of nextVal() as seen in apiController.js in the 'makeHack' func
 
 hack_sequence
   Type  | Start | Minimum | Maximum | Increment | Cycles? | Cache 

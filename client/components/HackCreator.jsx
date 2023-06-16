@@ -1,18 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import HackContainer from '../containers/HackContainer';
 
-const HackCreator = ({user}) => {
+const HackCreator = ({ user, category, setCategory, hacks, setHacks }) => {
   const [content, setContent] = useState('');
-  const [category, setCategory] = useState('Codesmith');
+  // Maybe attach content to parent component and attach useEffect to this state?
 
 
   // Event handler for add new hack form submission
   const handleFormSubmit = (event) => {
     event.preventDefault();
-    const u = user.username;
-    // console.log('content', content, 'category', category, 'user', u);
-    // console.log('this is user', user)
-    // console.log({ content, category, user });
-    const postData = { category, content, user: user.username};
+    console.log('HackCreator -> handleFormSubmit -> `user` from props: ', user);
+    const { displayname } = user;
+    const postData = { category, content, displayname };
     const addHack = {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -20,25 +19,43 @@ const HackCreator = ({user}) => {
     };
     fetch('/api', addHack)
       .then((response) => response.json())
-      .then((postData) => console.log(postData))
+      .then((postData) => {
+        console.log(postData);
+        getHacks();
+      })
       .catch((err) => console.log('Error ', err));
+
+      // const input = document.querySelector('.newHack');
+      // input.value = ''; // <<<<<<======== COME BACK TO THIS
+      setContent('');
   };
 
   const handleContentChange = (event) => setContent(event.target.value);
 
+  async function getHacks() {
+    try {
+      const response = await fetch(`/api/${category}`);
+      const data = await response.json();
+      setHacks(data);
+    } catch (err) {
+    }
+  }
+
+
+
   return (
-    <div>
-      <form onSubmit={handleFormSubmit}>
+    <div id="hackCreator">
+      <form id="hackCreatorForm"onSubmit={handleFormSubmit}>
         <input
           className="newHack"
           name="newHack"
           type="text"
           value={content}
           onChange={handleContentChange}
-          placeholder="Add Hack"
+          placeholder="Add new hack"
         />
 
-        <label htmlFor="categories">Category:</label>
+        <label htmlFor="categories"></label>
         <select
           id="categories"
           name="categories"

@@ -4,20 +4,68 @@
   margin: 0;
 }
 
+
+
 body {
-  background-color: pink;
+  background-color: rgb(32, 32, 32);
   // border: 1px solid orange;
   margin: 1em;
 }
 
 h1 {
-  text-align: center;
+text-align: center;
 }
 
-.gsignin {
+#mainContainer {
   display: flex;
-  align-items: center;
   justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  #navBarContainer {
+    display: flex;
+    position: sticky;
+    top: 0;
+    align-items: center;
+    justify-content: space-around;
+    // border: solid 3px rgb(75, 75, 75);
+    border-radius: .5rem;
+    height: 10rem;
+    width: 95%;
+    background: linear-gradient(180deg, rgb(39, 39, 39), rgba(0, 0, 0, 0), 10%);
+  }
+}
+
+
+#changeDisplayName {
+  display: flex;
+  flex-direction: column;
+  // width: 15rem;
+  // height: 2.5rem;
+  input {
+    // margin: .5rem;
+    width: 15rem;
+    height: 2rem;
+    border-radius: .3rem;
+    border: none;
+    background-color: rgb(235, 235, 235);
+    text-align: left;
+    padding-left: .7rem;
+  }
+  button {
+    margin-top: .5rem;
+    width: 15rem;
+    height: 2rem;
+    border-radius: .3rem;
+    border: .2px solid white;
+    box-shadow: 0 .2rem .5rem rgba(0, 0, 0, 0.5);
+    background-image: linear-gradient(144deg,#AF40FF, #5B42F3 50%,#00DDEB);
+    font-size: 1rem;
+    font-weight: 700;
+    color: white;
+  }
+  button:hover {
+    box-shadow: 0 .2rem .5rem rgba(255, 0, 217, 0.5);
+  }
 }
 
 .categories {
@@ -26,34 +74,102 @@ h1 {
   height: 5em;
   font-size: 1.1rem;
   text-align: center;
+  // border: solid 1px red;
+  background-color: lightgrey;
+  width: 20rem;
+  height: 2rem;
 }
 
 .catselector {
-  border: 1px solid grey;
+  // border: 1px solid rgb(85, 85, 85);
   border-radius: 10px;
-  box-shadow: 5px 5px 10px grey;
+  // box-shadow: 5px 5px 10px grey;
   display: flex;
   align-items: center;
   justify-content: center;
   margin-bottom: 1.2em;
+  // border: solid 1px grey;
+  width: 20rem;
+  height: 3.5rem;
 }
 
-.aHack {
-  border: 1px dotted grey;
+#hackCreator {
+  display: flex;
+  flex-direction: column;
+  // border: solid 1px purple;
+  // width: 15rem;
+  // height: 2.5rem;
+  #hackCreatorForm {
+    display: flex;
+    flex-direction: column;
+    // background-color: rgba(88, 88, 88, 0.685);
+  }
+  #categories {
+    width: 15rem;
+    height: 2rem;
+    border-radius: .3rem;
+    margin-top: .5rem;
+    text-align: center;
+    font-size: 1rem;
+    color: rgba(0, 0, 0, .7);
+  }
+  input {
+    background-color: rgb(235, 235, 235);
+    width: 15rem;
+    height: 2rem;
+    border-radius: .3rem;
+    border: none;
+    padding-left: .7rem;
+  }
+  button {
+    margin-top: .5rem;
+    width: 15rem;
+    height: 2rem;
+    border-radius: .3rem;
+    border: .1px solid white;
+    box-shadow: 0 .2rem .5rem rgba(0, 0, 0, 0.5);
+    background-image: linear-gradient(144deg,#AF40FF, #5B42F3 50%,#00DDEB);
+    font-size: 1rem;
+    font-weight: 700;
+    color: white;
+  }
+  button:hover {
+    box-shadow: 0 .2rem .5rem rgba(255, 0, 217, 0.5);
+  }
+}
+
+.hackCard {
+  border: 1px solid rgb(71, 71, 71);
   border-radius: 5px;
-  background-color: #CB416B;
-  box-shadow: 5px 5px 10px #CB416B;
-  width: 23%;
-  height: 15%;
+  background-color: #202020b4;
+  box-shadow: rgba(255, 1, 149, 0.25) 0px 2px 9px -1px, rgba(216, 0, 108, 0.3) 0px 1px 3px -1px;
+  color: rgb(219, 219, 219);
+  font-family: 'Tajawal', sans-serif;
+  width: 18rem;
+  height: 15rem;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   margin: 2em auto;
   padding: 2em;
+  .voteBtn {
+    margin-top: .5rem;
+    width: 3.5rem;
+  }
+  h2 {
+    overflow-y: auto;
+    &::-webkit-scrollbar {
+      width: 12px;
+    }
+  }
+  #likeAndDislike {
+    // background-image: url('../assets/LifeHx.png');
+    
+  }
 }
 
-.username-hack {
+.displayname-hack {
   font-weight: bolder;
 }
 
@@ -62,9 +178,12 @@ h1 {
   // border: 30px solid black;
   // background-color: magenta;
   display: flex;
-  // flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
   flex-flow: row wrap;
   width: 90%;
   padding: 5px;
   margin: 5px;
 }
+

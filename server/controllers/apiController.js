@@ -4,33 +4,27 @@ const controller = {}
 
 // Get data from the database:
 controller.getData = (req, res, next) => {
-
-  console.log('Category: ', req.params);
-  const category = req.params.category;
-
-  // hacks: content, likes, dislikes // h
-  // users: username // u
-  // Categories: Name // C
+  const { category } = req.params;
 
   // SQL query string to return all hacks in database:
-  const allHackQuery = `SELECT h.content, h.likes, h.dislikes, u.username, C.Name AS category 
+  const allHackQuery = `SELECT h.content, h.likes, h.dislikes, u.displayname, c.name AS category 
   FROM hacks h INNER JOIN users u 
-  ON u.ID = h.user_id
-  INNER JOIN Categories C
-  ON C.ID = h.category_id;`
+  ON u._id = h.user_id
+  INNER JOIN categories c
+  ON c._id = h.category_id;`
 
   // SQL query string to return all categories in database:
-  const categoryQuery = `SELECT h.ID, h.content, h.likes, h.dislikes, u.username, C.Name AS category 
+  const categoryQuery = `SELECT h._id, h.content, h.likes, h.dislikes, u.displayname, c.name AS category 
   FROM hacks h INNER JOIN users u 
-  ON u.ID = h.user_id
-  INNER JOIN Categories C
-  ON C.ID = h.category_id
-  WHERE C.Name = '${category}';`
+  ON u._id = h.user_id
+  INNER JOIN categories c
+  ON c._id = h.category_id
+  WHERE c.name = '${category}';`
 
   db.query(categoryQuery)
     .then(data => {
       const { rows } = data
-      console.log('From Database: ', rows)
+      console.log('apiController: getData: From Database: ', rows)
       res.locals.data = rows
       return next()
     })
@@ -39,85 +33,130 @@ controller.getData = (req, res, next) => {
 // Post a new hack to the database:
 
 controller.makeHack = (req, res, next) => {
-  // console.log(req)
-  // console.log(req.body)
-  const { category, content, user } = req.body
-  console.log('Category: ', category, ' Content: ', content, ' User: ', user)
+  const { category, content, displayname } = req.body;
 
-  // nextval is a method that generates the next primary key, pass it the sequence name
-  const postHack = `INSERT INTO hacks (ID, content, likes, dislikes, user_id, category_id) VALUES (nextval('hack_sequence'), '${content}', 0,0, (SELECT ID FROM users WHERE username = '${user}'), (SELECT ID FROM Categories WHERE Name = '${category}'));`
+  const postHack = 
+    `INSERT INTO hacks (content, likes, dislikes, user_id, category_id) 
+     VALUES ('${content}', 0,0, (SELECT _id FROM users WHERE displayname = '${displayname}'), 
+     (SELECT _id FROM categories WHERE name = '${category}'));`
 
   db.query(postHack)
     .then(data => {
-      const { rows } = data
-      // console.log('From Database: ', rows)
-      res.locals.data = rows
-      return next()
+      const { rows } = data;
+      // console.log('HACK From Database: ', rows);
+      res.locals.data = rows;
+      return next();
     })
 }
 
 // Post a new user to the database:
 controller.makeUser = (req, res, next) => {
-  const {name} = req.body
-  // console.log('reqbody', req.body)
-  // console.log('name in makeuser', name)
+  const { username, password } = req.body;
+
   // A SELECT query is required after the INSERT query to actually return the new user
-  const postUser = `INSERT INTO users (ID, googlename, username) VALUES (nextval(\'user_sequence\'),'${name}' ,'${name}');
-  SELECT * FROM users WHERE googlename = '${name}';`
+  const postUser = `INSERT INTO users (username, password, displayname) VALUES ('${username}', '${password}', '${username}');
+  SELECT * FROM users WHERE username = '${username}';`
   db.query(postUser)
     .then(data => {
-      // console.log('data in makeUser', data)
-      const { rows } = data[1]
-      // console.log('From Database: ', rows)
-      res.locals.data = rows
-      return next()
+      // console.log('apiController: makeUser: data in makeUser', data);
+      const { rows } = data[1];
+      // console.log('apiController: makeUser: rows From Database: ', rows);
+      res.locals.data = rows;
+      return next();
     })
+    .catch(err => next({
+      log: 'apiController: makeUser: Express error handler caught error in makeUser controller middleware',
+      status: 400,
+      message: { 'Failed to sign up with given credentials': err }
+    }));
 }
 
 controller.getUser = (req, res, next) => {
-  const name = req.params.user;
-  console.log('name in getUser', name)
-  const getUserQuery =  `SELECT id, username FROM users WHERE googlename = '${name}'`
+  const { username, password } = req.body;
+  
+  const getUserQuery =  `SELECT username, password, displayname FROM users WHERE username = '${username}' AND password = '${password}';`;
   db.query(getUserQuery)
     .then(data => {
-      // console.log('data from getusers', data)
-      const {rows} = data
-      res.locals.data = rows
+      // console.log('apiController -> getUser -> Data: ', data)
+      const { rows } = data;
+      // console.log('apiController -> getUser -> rows:', rows);
+      res.locals.data = rows;
       return next();
-    }
-  )
-}
-
-
-controller.changeUsername = (req, res, next) => {
-  const {newUsername} = req.body
-  const {id} = req.body
-  // console.log('reqbody', req.body)
-  // A SELECT query is required after the INSERT query to actually return the new user
-  const postUser = `UPDATE users SET username = '${newUsername}' WHERE ID = ${id};
-  SELECT * FROM users WHERE ID = ${id};`
-  db.query(postUser)
-    .then(data => {
-      // console.log('data in makeUser', data)
-      const { rows } = data[1]
-      // console.log('From Database: ', rows)
-      res.locals.data = rows
-      return next()
     })
+    .catch(err => next({
+      log: 'apiController: getUser: Express error handler caught error in getUser controller middleware',
+      status: 400,
+      message: { 'Failed to log in with given credentials': err }
+    }));
+   
 }
 
+
+// controller.changeDisplayName = (req, res, next) => {
+//   const {newUsername} = req.body;
+//   const {id} = req.body;
+//   // console.log('reqbody', req.body)
+//   // A SELECT query is required after the INSERT query to actually return the new user
+//   const postUser = `UPDATE users SET displayname = '${newUsername}' WHERE _id = ${id};
+//   SELECT * FROM users WHERE _id = ${id};`
+//   db.query(postUser)
+//     .then(data => {
+//       // console.log('data in makeUser', data)
+//       const { rows } = data[1]
+//       // console.log('From Database: ', rows)
+//       res.locals.data = rows
+//       return next()
+//     })
+
+  
+// }
+
+// ===== WORK IN PROGRESS ========== WORK IN PROGRESS ========== WORK IN PROGRESS ========== WORK IN PROGRESS =====
+controller.updateLikes = (req, res, next) => {
+
+  const { likes, _id } = req.body;
+  console.log('THIS IS REQ.BODY!!!', req.body);
+
+  const updateLikesQuery = `UPDATE hacks SET likes = ${likes} + 1 WHERE _id = ${_id};
+  SELECT likes FROM hacks WHERE _id = ${_id}`;
+  
+  db.query(updateLikesQuery)
+  .then(data => {
+    res.locals.data = data;
+    console.log('apiController -> updateLikes -> db query: ', data);
+    return next();
+  })
+  .catch(err => next({
+    log: 'apiController: Express error handler caught error in updateLikes controller middleware',
+    status: 400,
+    message: { 'Failed to update like button': err }
+  }));
+
+};
+// ===== WORK IN PROGRESS ========== WORK IN PROGRESS ========== WORK IN PROGRESS ========== WORK IN PROGRESS =====
+
+controller.updateDislikes = (req, res, next) => {
+
+  const { dislikes, _id } = req.body;
+  console.log('THIS IS REQ.BODY!!!', req.body);
+
+  const updateDislikesQuery = `UPDATE hacks SET dislikes = ${dislikes} + 1 WHERE _id = ${_id};
+  SELECT dislikes FROM hacks WHERE _id = ${_id}`;
+  
+  db.query(updateDislikesQuery)
+  .then(data => {
+    res.locals.data = data;
+    console.log('apiController -> updateDislikes -> db query: ', data);
+    return next();
+  })
+  .catch(err => next({
+    log: 'apiController: Express error handler caught error in updateDislikes controller middleware',
+    status: 400,
+    message: { 'Failed to update dislike button': err }
+  }));
+
+};
 
 
 module.exports = controller
 
-
-
-/* Syntax for creating a new sql sequence in the terminal */
-// CREATE SEQUENCE user_sequence
-// start with 2
-// increment by 1
-// minvalue 0
-// maxvalue 999
-// cycle;
-
-// SELECT * FROM information_schema.sequences;
