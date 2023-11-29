@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router';
 import jwtDecode from "jwt-decode";
+import { NextResponse } from 'next/server';
 
 
 const Login = ({ setUser }) => {
